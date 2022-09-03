@@ -25,6 +25,7 @@ export default function AddForm(props) {
 
     try {
       await fetch("/api/addFile", requestOptions);
+      props.setModalOpen(false);
     } catch (err) {
       setError(true);
       console.error(err);
