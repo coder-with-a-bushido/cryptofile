@@ -1,7 +1,15 @@
 import CryptoJS from "crypto-js";
+import { useState } from "react";
 import { Web3Storage } from "web3.storage";
 
+import Modal from "react-modal";
+import Button from "./button";
+import InputBox from "./inputBox";
+
 export default function FileTile(props) {
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [inputs, setInputs] = useState({});
+
   function convertWordArrayToUint8Array(wordArray) {
     var arrayOfWords = wordArray.hasOwnProperty("words") ? wordArray.words : [];
     var length = wordArray.hasOwnProperty("sigBytes")
@@ -39,8 +47,7 @@ export default function FileTile(props) {
     const file = files[0];
     var reader = new FileReader();
     reader.onload = () => {
-      var key = "123456";
-
+      const key = inputs.key;
       var decrypted = CryptoJS.AES.decrypt(reader.result, key); // Decryption: I: Base64 encoded string (OpenSSL-format) -> O: WordArray
       var typedArray = convertWordArrayToUint8Array(decrypted); // Convert: WordArray -> typed array
 
@@ -56,6 +63,13 @@ export default function FileTile(props) {
     console.log(files);
     reader.readAsText(file);
   }
+
+  const handleChange = (e) => {
+    setInputs((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
   return (
     <div className="w-full max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
       <div className="flex flex-col items-center pb-10">
@@ -72,13 +86,47 @@ export default function FileTile(props) {
         </span>
         <div className="flex mt-4 space-x-3 md:mt-6">
           <button
-            onClick={(e) => downloadFile(e)}
+            onClick={() => setModalOpen(true)}
             className="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Download
           </button>
         </div>
       </div>
+      {isModalOpen ? (
+        <Modal
+          className="filekey"
+          isOpen={true}
+          onRequestClose={() => setModalOpen(false)}
+          ariaHideApp={false}
+          overlayClassName="overlay"
+        >
+          <div className="inputboxes mt-7 ">
+            <div className="w-full  px-3 mb-6 md:mb-0">
+              <InputBox
+                title="Password"
+                name="key"
+                type="text"
+                value={inputs.key}
+                textHandler={handleChange}
+              />
+            </div>
+          </div>
+          <div className="buttons">
+            <div className="m-5">
+              <Button
+                name="Cancel"
+                onClick={() => {
+                  setModalOpen(false);
+                }}
+              />
+            </div>
+            <div className="m-5">
+              <Button name="Submit" onClick={() => downloadFile()} />
+            </div>
+          </div>
+        </Modal>
+      ) : null}
     </div>
   );
 }

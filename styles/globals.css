@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.addForm {
+.addForm, .filekey {
   width: 80%;
   height: 90%;
   border-radius: 10px;
@@ -13,6 +13,10 @@
   bottom: 40px;
   background-color: #fff;
   overflow-y: scroll;
+}
+.filekey{
+  width: 40%;
+  height: 30%;
 }
 .overlay {
   background-color: #131313;
