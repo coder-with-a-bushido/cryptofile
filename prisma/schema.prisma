@@ -1,5 +1,5 @@
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -7,10 +7,10 @@ datasource db {
   url      = "postgresql://mesoHack:3yHAKA2KsxrjRxMlBXXtMw@free-tier12.aws-ap-south-1.cockroachlabs.cloud:26257/mesohack?sslmode=verify-full&options=--cluster%3Dpure-orc-1155"
 }
 
-model Files{
-    userid String
-    file_id Int @id @default(sequence())
-    file_name String
-    file_description String
-    cid String 
+model files {
+  userid           String
+  file_id          Int    @id @default(sequence())
+  file_name        String
+  file_description String
+  cid              String
 }
