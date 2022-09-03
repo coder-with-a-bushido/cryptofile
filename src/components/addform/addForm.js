@@ -3,43 +3,56 @@ import { useState } from "react";
 import Modal from "react-modal";
 import Button from "../button";
 import InputBox from "../inputBox";
+import CryptoJS from "crypto-js";
+import { Web3Storage } from "web3.storage";
+
 export default function AddForm(props) {
   const [inputs, setInputs] = useState({});
+  const [files, setFiles] = useState({});
   const userData = useUser();
   const addEvt = async (e) => {
     e.preventDefault();
 
-    const headers = new Headers();
-    headers.append("Content-Type", "application/json");
+    const file = files[0];
+    var reader = new FileReader();
+    reader.onload = async () => {
+      // encrypt the file
+      var wordArray = CryptoJS.lib.WordArray.create(reader.result); // Convert: ArrayBuffer -> WordArray
+      var encrypted = CryptoJS.AES.encrypt(wordArray, inputs.key).toString(); // Encryption: I: WordArray -> O: -> Base64 encoded string (OpenSSL-format)
+      const fileEnc = new Blob([encrypted]); // Create blob from string
+      console.log(fileEnc);
 
-    const requestOptions = {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify({
-        fname: inputs.filename,
-        description: inputs.description,
-        cid: "",
-        uid: userData.user.email,
-      }),
+      // upload logic
+      const client = new Web3Storage({
+        token: process.env.NEXT_PUBLIC_WEB3_STORAGE_KEY,
+      });
+      const cid = await client.put([new File([fileEnc], file.name)]);
+      console.log("stored files with cid:", cid);
+
+      const headers = new Headers();
+      headers.append("Content-Type", "application/json");
+      const requestOptions = {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify({
+          fname: file.name,
+          description: inputs.description ? inputs.description : "",
+          cid: cid,
+          uid: userData.user.email,
+        }),
+      };
+
+      try {
+        await fetch("/api/addFile", requestOptions);
+        props.setModalOpen(false);
+      } catch (err) {
+        setError(true);
+        console.error(err);
+      }
     };
-
-    try {
-      await fetch("/api/addFile", requestOptions);
-      props.setModalOpen(false);
-    } catch (err) {
-      setError(true);
-      console.error(err);
-    }
+    reader.readAsArrayBuffer(file);
   };
 
-  const getEvt = async (e) => {
-    try {
-      await fetch("/api/getFiles");
-    } catch (err) {
-      setError(true);
-      console.error(err);
-    }
-  };
   const handleChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,
@@ -61,10 +74,10 @@ export default function AddForm(props) {
         <div className="inputboxes m-7 ">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <InputBox
-              title="File Name"
-              name="filename"
+              title="Password"
+              name="key"
               type="text"
-              value={inputs.filename}
+              value={inputs.key}
               textHandler={handleChange}
             />
           </div>
@@ -96,6 +109,7 @@ export default function AddForm(props) {
     focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 type="file"
                 id="formFile"
+                onChange={(e) => setFiles(e.target.files)}
               />
             </div>
           </div>
@@ -105,7 +119,6 @@ export default function AddForm(props) {
             <Button
               name="Cancel"
               onClick={(e) => {
-                getEvt(e);
                 props.setModalOpen(false);
               }}
             />

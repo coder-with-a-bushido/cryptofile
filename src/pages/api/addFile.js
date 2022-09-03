@@ -12,6 +12,7 @@ export default async function AddFile(req, res) {
     });
     return res.status(200).json({ files });
   } catch (err) {
+    console.log(err);
     return res.status(509).json({ error: err });
   }
 }
