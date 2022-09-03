@@ -10,7 +10,6 @@ export default async function AddFile(req, res) {
         userid: uid,
       },
     });
-    console.log(files);
     return res.status(200).json({ files });
   } catch (err) {
     return res.status(509).json({ error: err });

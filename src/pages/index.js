@@ -1,4 +1,5 @@
 import { useUser } from "@auth0/nextjs-auth0";
+import Link from "next/link";
 import Dashboard from "../dashboard";
 
 export default function Home() {
@@ -7,6 +8,6 @@ export default function Home() {
   if (userData.user) {
     return <Dashboard />;
   } else {
-    return <a href="/api/auth/login">Login</a>;
+    return <Link href="/api/auth/login">Login</Link>;
   }
 }

@@ -7,7 +7,7 @@ export default async function getFiles(req, res) {
         userid: uid,
       },
     });
-    console.log(files);
+    // console.log(files);
     return res.status(200).json(
       files.map((file) => ({
         file_name: file.file_name,

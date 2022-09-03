@@ -55,7 +55,7 @@ export default function AddForm(props) {
     >
       <div>
         <h1 className="text-3xl md:text-4xl font-bold mb-2 text-center m-5">
-          Job Details
+          Add File
         </h1>
         <div className="inputboxes m-7 ">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -75,6 +75,28 @@ export default function AddForm(props) {
               type="text"
               textHandler={handleChange}
             />
+          </div>
+
+          <div className="flex justify-center">
+            <div className="mb-3 w-96">
+              <input
+                className="form-control block w-full
+    px-3
+    py-1.5
+    text-base
+    font-normal
+    text-gray-700
+    bg-white bg-clip-padding
+    border border-solid border-gray-300
+    rounded
+    transition
+    ease-in-out
+    m-0
+    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                type="file"
+                id="formFile"
+              />
+            </div>
           </div>
         </div>
         <div className="buttons">
