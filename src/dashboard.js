@@ -36,7 +36,11 @@ export default function Dashboard() {
     <div>
       <button onClick={() => setModalOpen(true)}>Add</button>
 
-      {files ? files.map((file) => <FileTile file={file} />) : null}
+      {typeof files !== "undefined" && files.length > 0 ? (
+        files.map((file) => <FileTile file={file} />)
+      ) : (
+        <p>No file found!</p>
+      )}
       {/* <a href="api/auth/logout">logout</a> */}
       {isModalOpen ? <AddForm setModalOpen={setModalOpen} /> : null}
     </div>
