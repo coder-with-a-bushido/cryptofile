@@ -104,7 +104,7 @@ export default function AddForm(props) {
                 <InputBox
                   title="Password"
                   name="key"
-                  type="text"
+                  type="password"
                   value={inputs.key}
                   textHandler={handleChange}
                 />
