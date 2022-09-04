@@ -8,8 +8,8 @@ body{
   background-color:#f4f1ec;
 }
 .addForm, .filekey {
-  width: 80%;
-  height: 90%;
+  width: 60%;
+  height: 70%;
   border-radius: 10px;
   position: absolute;
   top: 30px;

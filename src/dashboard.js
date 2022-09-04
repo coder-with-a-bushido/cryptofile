@@ -40,8 +40,8 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="font-body">
-      <div className=" w-full bg-cardColor h-72">
+    <div>
+      <div className=" w-full bg-cardColor h-80">
         <div className="flex flex-wrap items-center justify-center p-4">
           <div className="flex items-center container-fluid mt-8">
             <img className="w-20" src="/logo.png" />
@@ -54,7 +54,7 @@ export default function Dashboard() {
           </span>
           <div className="mt-10 mb-2">
             <span className="text-lg font-medium  pt-2 text-black">
-              powered by
+              Powered By
             </span>
           </div>
           <div className="flex flex-wrap items-center justify-center">
@@ -82,7 +82,7 @@ export default function Dashboard() {
       {loading ? (
         <Loading />
       ) : (
-        <div className="flex flex-wrap ">
+        <div className="flex flex-wrap font-body ">
           {typeof files !== "undefined" && files.length > 0 ? (
             files.map((file, key) => <FileTile file={file} key={key} />)
           ) : (

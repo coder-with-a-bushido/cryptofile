@@ -78,60 +78,53 @@ export default function AddForm(props) {
           <h1 className="text-3xl md:text-4xl font-bold mb-2 text-center m-5">
             Add File
           </h1>
-          <div className="inputboxes m-7 ">
-            <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-              <InputBox
-                title="Password"
-                name="key"
-                type="text"
-                value={inputs.key}
-                textHandler={handleChange}
-              />
-            </div>
-            <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-              <InputBox
-                title="Description"
-                name="description"
-                value={inputs.description}
-                type="text"
-                textHandler={handleChange}
-              />
+          <div className="flex justify-around ">
+            <div className="flex w-48 m-8 items-center justify-center bg-grey-lighter">
+              <label className="w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
+                <svg
+                  className="w-8 h-8"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                </svg>
+                <span class="mt-2 text-base leading-normal">Select a file</span>
+                <input type="file" class="hidden" />
+              </label>
             </div>
 
-            <div className="flex justify-center">
-              <div className="mb-3 w-96">
-                <input
-                  className="form-control block w-full
-    px-3
-    py-1.5
-    text-base
-    font-normal
-    text-gray-700
-    bg-white bg-clip-padding
-    border border-solid border-gray-300
-    rounded
-    transition
-    ease-in-out
-    m-0
-    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                  type="file"
-                  id="formFile"
-                  onChange={(e) => setFiles(e.target.files)}
+            <div className="inputboxes m-7 ">
+              <div className="w-full  px-3 mb-6 md:mb-0">
+                <InputBox
+                  title="Password"
+                  name="key"
+                  type="text"
+                  value={inputs.key}
+                  textHandler={handleChange}
                 />
               </div>
-            </div>
-          </div>
-          <div className="buttons">
-            <div className="m-5">
-              <Button
-                name="Cancel"
-                onClick={(e) => {
-                  props.setModalOpen(false);
-                }}
-              />
-            </div>
-            <div className="m-5">
-              <Button name="Submit" onClick={(e) => addEvt(e)} />
+              <div className="w-full px-3 mb-6 md:mb-0">
+                <InputBox
+                  title="Description"
+                  name="description"
+                  value={inputs.description}
+                  type="text"
+                  textHandler={handleChange}
+                />
+              </div>
+              <div className="buttons">
+                <div className="m-5">
+                  <Button
+                    name="Cancel"
+                    onClick={(e) => {
+                      props.setModalOpen(false);
+                    }}
+                  />
+                </div>
+                <div className="m-5">
+                  <Button name="Submit" onClick={(e) => addEvt(e)} />
+                </div>
+              </div>
             </div>
           </div>
         </div>
