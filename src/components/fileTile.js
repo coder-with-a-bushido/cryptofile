@@ -8,6 +8,7 @@ import InputBox from "./inputBox";
 
 export default function FileTile(props) {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isDescModalOpen, setDescModalOpen] = useState(false);
   const [inputs, setInputs] = useState({});
 
   function convertWordArrayToUint8Array(wordArray) {
@@ -71,23 +72,29 @@ export default function FileTile(props) {
     }));
   };
   return (
-    <div className="w-full max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-      <div className="flex flex-col items-center pb-10">
+    <div
+      className="w-full w-56 m-5 bg-cardColor rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
+      key={props.key}
+    >
+      <div
+        className="flex flex-col items-center  pb-10"
+        onClick={() => setDescModalOpen(true)}
+      >
         <img
-          className="mb-3 w-24 h-24 rounded-full shadow-lg"
+          className="mb-3 w-24 h-24 mt-4 rounded-full"
           src="/file.png"
           alt="Bonnie image"
         />
-        <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
+        <h5 className="mb-1 text-xl text-buttonColor font-medium text-gray-900 dark:text-white">
           {props.file.file_name}
         </h5>
-        <span className="text-sm text-gray-500 dark:text-gray-400">
+        <span className="text-base text-gray-500 text-descColor text-center m-2 truncate leading-tight w-48 dark:text-gray-400">
           {props.file.file_description}
         </span>
-        <div className="flex mt-4 space-x-3 md:mt-6">
+        <div className="flex space-x-3 md:mt-6">
           <button
             onClick={() => setModalOpen(true)}
-            className="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-cardColor bg-buttonColor rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Download
           </button>
@@ -124,6 +131,26 @@ export default function FileTile(props) {
             <div className="m-5">
               <Button name="Submit" onClick={() => downloadFile()} />
             </div>
+          </div>
+        </Modal>
+      ) : null}
+      {isDescModalOpen ? (
+        <Modal
+          className="filekey"
+          isOpen={true}
+          onRequestClose={() => setDescModalOpen(false)}
+          ariaHideApp={false}
+          overlayClassName="overlay"
+        >
+          <div className="mt-2 ml-2">
+            <span className="text-lg underline p-3 text-buttonColor">
+              Description:
+            </span>
+          </div>
+          <div className="p-3 ml-3">
+            <span className="text-mx text-descColor text-center truncate leading-tight w-48 ">
+              {props.file.file_description}
+            </span>
           </div>
         </Modal>
       ) : null}
