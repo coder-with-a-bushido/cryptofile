@@ -91,7 +91,11 @@ export default function AddForm(props) {
                 <span className="mt-2 text-base leading-normal">
                   Select a file
                 </span>
-                <input type="file" className="hidden" />
+                <input
+                  type="file"
+                  onChange={(e) => setFiles(e.target.files)}
+                  className="hidden"
+                />
               </label>
             </div>
 
