@@ -21,7 +21,7 @@ export default function Landing() {
               </li>
               <li>
                 {" "}
-                📌 No one on web can access your file without the file's
+                📌 No one on web can access your file without the file&apos;s
                 password
               </li>
             </ul>

@@ -26,6 +26,7 @@ export default function Dashboard() {
       const data = await fetch("/api/getFiles", requestOptions);
       data.json().then((res) => {
         setFiles(res);
+        console.log(files);
       });
     } catch (err) {
       console.error(err);
@@ -38,7 +39,6 @@ export default function Dashboard() {
     getEvt();
   }, []);
 
-  console.log(files);
   return (
     <div className="font-body">
       <div className=" w-full bg-cardColor h-72">
